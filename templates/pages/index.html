@@ -1,0 +1,55 @@
+{% load static %}
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Mood Analysis</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+    <noscript>
+        <link rel="stylesheet" href="{% static 'css/noscript.css' %}">
+    </noscript>
+</head>
+<body class="is-preload">
+<!-- Wrapper -->
+<div id="wrapper">
+
+    <!-- Header -->
+    <header id="header">
+        <div class="inner">
+
+            <!-- Logo -->
+            <a href="index.html" class="logo">
+                <span class="symbol"><img src="{% static 'images/logo.svg' %}" alt=""/></span><span class="title">Mood Analysis</span>
+            </a>
+
+        </div>
+    </header>
+
+
+    <!-- Main -->
+    <div id="main">
+        <div class="inner">
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer id="footer">
+        <div class="inner">
+            <ul class="copyright">
+                <li>&copy; Dennis Hug, Laurin Leiwes, Moritz Moser</li>
+            </ul>
+        </div>
+    </footer>
+
+</div>
+
+<!-- Scripts -->
+<script src="{% static 'js/jquery.min.js' %}"></script>
+<script src="{% static 'js/browser.min.js' %}"></script>
+<script src="{% static 'js/breakpoints.min.js' %}"></script>
+<script src="{% static 'js/util.js' %}"></script>
+<script src="{% static 'js/main.js' %}"></script>
+
+</body>
+</html>
