@@ -34,15 +34,26 @@
             {#            <a href="#" class="button icon solid fa-upload">Icon</a>#}
             <ul class="actions small">
                 <li>
-                    <form method="post" action="{% url 'analyse-recorded-video' %}">
+                    <form method="post" action="{% url 'analyse-image' %}" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <ul class="actions stacked">
+                            <li><input type="file" id="image" name="image" class="button icon solid fa-upload"
+                                       alt="image" accept="image/jpeg"/></li>
+                            <li>
+                                <button type="submit" class="button primary">Analyse Uploaded Image</button>
+                            </li>
+                        </ul>
+                    </form>
+                </li>
+                <li>
+                    <form method="post" action="{% url 'analyse-recorded-video' %}" enctype="multipart/form-data">
                         {% csrf_token %}
                         <input type="hidden" accept="video/webm" id="recorded_video" name="recorded_video" value="">
                         <ul class="actions stacked">
                             <li><a href="#" class="button" onclick="start_recording()">Record Video</a></li>
-                            <li><a href="#" class="button" onclick="stop_recording()">Stop Recording</a></li>
                             <li><video autoplay id="video"></video></li>
                             <li>
-                                <button type="submit" class="button primary">Analyse Recorded Video</button>
+                                <button type="submit" class="button primary" onclick="stop_recording()">Stop Recording and Analyse Video</button>
                             </li>
                         </ul>
                     </form>
