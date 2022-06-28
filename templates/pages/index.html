@@ -30,6 +30,24 @@
     <!-- Main -->
     <div id="main">
         <div class="inner">
+            <span class="image main"><img src="{% static 'images/banner.jpg' %}" alt=""/></span>
+            {#            <a href="#" class="button icon solid fa-upload">Icon</a>#}
+            <ul class="actions small">
+                <li>
+                    <form method="post" action="{% url 'analyse-recorded-video' %}">
+                        {% csrf_token %}
+                        <input type="hidden" accept="video/webm" id="recorded_video" name="recorded_video" value="">
+                        <ul class="actions stacked">
+                            <li><a href="#" class="button" onclick="start_recording()">Record Video</a></li>
+                            <li><a href="#" class="button" onclick="stop_recording()">Stop Recording</a></li>
+                            <li><video autoplay id="video"></video></li>
+                            <li>
+                                <button type="submit" class="button primary">Analyse Recorded Video</button>
+                            </li>
+                        </ul>
+                    </form>
+                </li>
+            </ul>
         </div>
     </div>
 
@@ -50,6 +68,6 @@
 <script src="{% static 'js/breakpoints.min.js' %}"></script>
 <script src="{% static 'js/util.js' %}"></script>
 <script src="{% static 'js/main.js' %}"></script>
-
+<script src="{% static 'js/record.js' %}"></script>
 </body>
 </html>
