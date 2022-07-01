@@ -13,8 +13,6 @@ def index(request):
 def analyse_image(request):
     if request.method == 'POST':
         image = request.FILES['image']
-        result = emotion_detection.emotion_detection(image)
-        print(result)
     return render(request, 'pages/index.html')
 
 
@@ -23,5 +21,6 @@ def analyse_recorded_video(request):
     if request.method == 'POST':
         blob_video = request.FILES['blob_video']
         analyse_recorded_video_use = AnalyseRecordedVideo(blob_video)
-        analyse_recorded_video_use.execute()
+        emotion = analyse_recorded_video_use.execute()
+        print(emotion)
     return render(request, 'pages/index.html')

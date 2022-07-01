@@ -1,8 +1,20 @@
+import os
 import tempfile
 import random
 import string
 
 import cv2
+
+import numpy as np
+
+
+from PIL import Image
+
+from tensorflow.keras.models import load_model
+
+from tensorflow.keras.preprocessing.image import img_to_array
+
+from statistics import mode
 
 
 class AnalyseRecordedVideo:
@@ -10,6 +22,8 @@ class AnalyseRecordedVideo:
         self.blob_video = blob_video
         self.filename = ""
         self.frame_distance = 0
+        self.image_names = []
+        self.emotions = []
 
     def execute(self):
         file = tempfile.NamedTemporaryFile(suffix='webm')
@@ -18,6 +32,12 @@ class AnalyseRecordedVideo:
             self.filename = f_vid.name
             self.frame_distance = self._get_frame_distance()
             self._create_frames_as_jpg()
+            emotion_detection = EmotionDetection(self.image_names)
+            self.emotions = emotion_detection.execute()
+            return self._get_most_frequent_emotion()
+
+    def _get_most_frequent_emotion(self):
+        return mode(self.emotions)
 
     def _get_frame_distance(self):
         cap = cv2.VideoCapture(self.filename)
@@ -37,16 +57,52 @@ class AnalyseRecordedVideo:
         count = 0
         frame_base_name = ''.join(random.choices(string.ascii_lowercase + string.digits, k=10))
         while cap.isOpened():
-            # Capture frame-by-frame
             ret, frame = cap.read()
             if ret:
                 if count % self.frame_distance == 0:
                     print('Read %d frame: ' % count, ret)
-                    cv2.imwrite(f"{frame_base_name}_{count}.jpg", frame)  # save frame as JPEG file
+                    file_name = f"{frame_base_name}_{count}.jpg"
+                    self.image_names.append(file_name)
+                    cv2.imwrite(file_name, frame)
                 count += 1
             else:
                 break
-        # When everything done, release the capture
         cap.release()
         cv2.destroyAllWindows()
 
+
+class EmotionDetection:
+    def __init__(self, image_paths):
+        self.image_paths = image_paths
+        print(os.listdir("./models"))
+        print(os.path)
+        self.emotion_model = load_model("./models/emotions_final.h5")
+        self.face_classifier = cv2.CascadeClassifier('./models/haarcascade_frontalface_default.xml')
+        self.emotion_label = ['Angry', "Distgust", 'Fear', 'Happy', 'Neutral', 'Sad', 'Surprise']
+
+    def execute(self):
+        emotions = []
+        for image_path in self.image_paths:
+            frame = Image.open(image_path)
+            try:
+                gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+            except Exception as e:
+                print(e)
+                print("Picture could not ber read", image_path)
+                break
+            faces = self.face_classifier.detectMultiScale(gray, 1.3, 5)
+            if str(type(faces)) == "<class 'tuple'>":
+                print("no face found", image_path)
+                break
+            for (x, y, w, h) in faces:
+                cv2.rectangle(frame, (x, y), (x + w, y + h), (255, 0, 0), 2)
+                roi_gray = gray[y:y + h, x:x + w]
+                roi_gray = cv2.resize(roi_gray, (48, 48), interpolation=cv2.INTER_AREA)
+
+                roi = img_to_array(roi_gray)
+                roi = np.expand_dims(roi, axis=0)
+
+                preds = self.emotion_model.predict(roi)
+                label = self.emotion_label[np.argmax(preds[0])]
+                emotions.append(label)
+        return emotions
