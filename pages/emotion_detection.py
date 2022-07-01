@@ -31,13 +31,12 @@ def emotion_detection(img_path):
   #load test image:
   #print(type(img_path.open()))
   #frame = cv2.imread(img_path.open())
-  frame = Image.open(img_path.open())
-
+  frame = np.array(Image.open(img_path.open()))
   #load the previously trained and saved model
-  emotion_model = load_model("../models/emotions_final.h5")
+  emotion_model = load_model("./models/emotions_final.h5")
 
   #load face classifier to aid the detection, if file does not exist, download it
-  face_classifier = cv2.CascadeClassifier('../models/haarcascade_frontalface_default.xml')
+  face_classifier = cv2.CascadeClassifier('./models/haarcascade_frontalface_default.xml')
 
   #save the emotion labels in correct order
   emotion_label = ['Angry', "Distgust", 'Fear', 'Happy', 'Neutral', 'Sad', 'Surprise']
