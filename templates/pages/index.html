@@ -40,23 +40,29 @@
                             <li><input type="file" id="image" name="image" class="button icon solid fa-upload"
                                        alt="image" accept="image/jpeg"/></li>
                             <li>
-                                <button type="submit" class="button primary">Analyse Uploaded Image</button>
+                                <button type="submit" class="button primary">Analyze Uploaded Image</button>
                             </li>
                         </ul>
                     </form>
                 </li>
                 <li>
-                    <form method="post" action="{% url 'analyse-recorded-video' %}" enctype="multipart/form-data">
-                        {% csrf_token %}
-                        <input type="hidden" accept="video/webm" id="recorded_video" name="recorded_video" value="">
-                        <ul class="actions stacked">
-                            <li><a href="#" class="button" onclick="start_recording()">Record Video</a></li>
-                            <li><video autoplay id="video"></video></li>
+
+                    <ul class="actions stacked">
+                        <li><a href="#" class="button" onclick="record()">Record Video</a></li>
+                        <form method="post" action="{% url 'analyse-recorded-video' %}" enctype="multipart/form-data"
+                              id="stop_recording">
+                            {% csrf_token %}
+                            <input type="hidden" accept="text/strings" id="blob_url" name="blob_url" value="">
+                            <input type="hidden" id="blob_video" name="blob_video" value="">
                             <li>
-                                <button type="submit" class="button primary" onclick="stop_recording()">Stop Recording and Analyse Video</button>
+                                <button type="submit" class="button primary">Analyze recorded Video
+                                </button>
                             </li>
-                        </ul>
-                    </form>
+                        </form>
+                        <li>
+                            <video autoplay id="video"></video>
+                        </li>
+                    </ul>
                 </li>
             </ul>
         </div>

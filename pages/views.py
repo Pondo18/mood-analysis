@@ -1,7 +1,15 @@
+import os
+
+import cv2
+
+
+import tempfile
+
 from django.shortcuts import render
 
+from django.views.decorators.csrf import csrf_exempt
 
-# Create your views here.
+from pages.usecases import AnalyseRecordedVideo
 
 
 def index(request):
@@ -14,7 +22,10 @@ def analyse_image(request):
     return render(request, 'pages/index.html')
 
 
+@csrf_exempt
 def analyse_recorded_video(request):
     if request.method == 'POST':
-        recorded_video = request.POST['recorded_video']
+        blob_video = request.FILES['blob_video']
+        analyse_recorded_video_use = AnalyseRecordedVideo(blob_video)
+        analyse_recorded_video_use.execute()
     return render(request, 'pages/index.html')
