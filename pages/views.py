@@ -1,13 +1,7 @@
-import os
-
-import cv2
-
-
-import tempfile
-
 from django.shortcuts import render
 
 from django.views.decorators.csrf import csrf_exempt
+from pages import emotion_detection
 
 from pages.usecases import AnalyseRecordedVideo
 
@@ -19,6 +13,8 @@ def index(request):
 def analyse_image(request):
     if request.method == 'POST':
         image = request.FILES['image']
+        result = emotion_detection.emotion_detection(image)
+        print(result)
     return render(request, 'pages/index.html')
 
 
