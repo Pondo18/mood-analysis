@@ -34,6 +34,7 @@ class AnalyseRecordedVideo:
             self._create_frames_as_jpg()
             emotion_detection = EmotionDetection(self.image_names)
             self.emotions = emotion_detection.execute()
+            self._remove_images()
             return self._get_most_frequent_emotion()
 
     def _get_most_frequent_emotion(self):
@@ -69,6 +70,10 @@ class AnalyseRecordedVideo:
                 break
         cap.release()
         cv2.destroyAllWindows()
+
+    def _remove_images(self):
+        for image in self.image_names:
+            os.remove(image)
 
 
 class EmotionDetection:
