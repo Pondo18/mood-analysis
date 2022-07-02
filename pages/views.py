@@ -13,9 +13,8 @@ def analyse_image(request):
     if request.method == 'POST':
         image = request.FILES['image']
         analyse_image_use = AnalyseImage(image)
-        emotion = analyse_image_use.execute()
-        print(emotion)
-    return render(request, 'pages/index.html')
+        frame = analyse_image_use.execute()
+    return render(request, 'pages/index.html', {'frames': frame})
 
 
 @csrf_exempt

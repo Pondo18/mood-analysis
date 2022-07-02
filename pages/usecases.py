@@ -2,6 +2,7 @@ import os
 import tempfile
 import random
 import string
+from base64 import b64encode
 
 import cv2
 
@@ -85,8 +86,8 @@ class AnalyseImage:
         with file as f_vid:
             f_vid.write(self.image_to_analyse.read())
             emotion_detection = EmotionDetection([f_vid.name])
-            execute_ = emotion_detection.execute()[0]
-            return execute_
+            frame = emotion_detection.execute()
+            return frame
 
 
 class EmotionDetection:
@@ -97,7 +98,7 @@ class EmotionDetection:
         self.emotion_label = ['Angry', "Distgust", 'Fear', 'Happy', 'Neutral', 'Sad', 'Surprise']
 
     def execute(self):
-        emotions = []
+        frames = []
         for image_path in self.image_paths:
             frame = np.array(Image.open(image_path))
             try:
@@ -120,5 +121,14 @@ class EmotionDetection:
 
                 preds = self.emotion_model.predict(roi)
                 label = self.emotion_label[np.argmax(preds[0])]
-                emotions.append(label)
-        return emotions
+                # emotions.append(label)
+                with open(image_path, "rb") as image_file:
+                    image_data = b64encode(image_file.read()).decode('utf-8')
+                    frames.append(Frame(image_data, label))
+        return frames
+
+
+class Frame:
+    def __init__(self, image, emotion):
+        self.image = image
+        self.emotion = emotion

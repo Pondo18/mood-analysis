@@ -18,11 +18,7 @@
     <!-- Header -->
     <header id="header">
         <div class="inner">
-
-            <!-- Logo -->
-            <a href="index.html" class="logo">
-                <span class="title">Mood Analysis</span>
-            </a>
+            <h1>Mood Analysis</h1>
         </div>
     </header>
 
@@ -66,6 +62,17 @@
                     </ul>
                 </div>
             </div>
+            {% if not frames|length == 0 %}
+                <h2>Frames taken into account</h2>
+                <div class="flex-container">
+                    {% for frame in frames %}
+                        <div>
+                            <img src="data:;base64,{{ frame.image }}" style="width: 10rem; height: auto;"/>
+                        {{ frame.emotion }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
         </div>
     </div>
 

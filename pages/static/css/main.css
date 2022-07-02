@@ -85,6 +85,20 @@ input, select, textarea {
     /*height: 200px;*/
 }
 
+.flex-container {
+    display: flex;
+    justify-content: center;
+}
+
+.flex-container > div {
+    width: 100px;
+    margin: 10px;
+    text-align: center;
+    line-height: 75px;
+    font-size: 30px;
+    flex-direction: column;
+}
+
 .itemleft {
     /*flex: 1 0 auto;*/
     /*width: 100px;*/
@@ -97,6 +111,11 @@ input, select, textarea {
     /*width: 100px;*/
     /*height: 100px;*/
     align-self: flex-end;
+}
+
+.frameimage {
+    width: 3rem;
+    height: auto;
 }
 
 /* Basic */
