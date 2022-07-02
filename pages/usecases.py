@@ -76,11 +76,22 @@ class AnalyseRecordedVideo:
             os.remove(image)
 
 
+class AnalyseImage:
+    def __init__(self, image_to_analyse):
+        self.image_to_analyse = image_to_analyse
+
+    def execute(self):
+        file = tempfile.NamedTemporaryFile(suffix='.jpg')
+        with file as f_vid:
+            f_vid.write(self.image_to_analyse.read())
+            emotion_detection = EmotionDetection([f_vid.name])
+            execute_ = emotion_detection.execute()[0]
+            return execute_
+
+
 class EmotionDetection:
     def __init__(self, image_paths):
         self.image_paths = image_paths
-        print(os.listdir("./models"))
-        print(os.path)
         self.emotion_model = load_model("./models/emotions_final.h5")
         self.face_classifier = cv2.CascadeClassifier('./models/haarcascade_frontalface_default.xml')
         self.emotion_label = ['Angry', "Distgust", 'Fear', 'Happy', 'Neutral', 'Sad', 'Surprise']
@@ -88,7 +99,7 @@ class EmotionDetection:
     def execute(self):
         emotions = []
         for image_path in self.image_paths:
-            frame = Image.open(image_path)
+            frame = np.array(Image.open(image_path))
             try:
                 gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
             except Exception as e:
