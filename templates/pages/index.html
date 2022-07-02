@@ -9,6 +9,7 @@
     <noscript>
         <link rel="stylesheet" href="{% static 'css/noscript.css' %}">
     </noscript>
+    <link rel="shortcut icon" type="image/png" href="{% static 'images/favicon.ico' %}"/>
 </head>
 <body class="is-preload">
 <!-- Wrapper -->
@@ -20,9 +21,8 @@
 
             <!-- Logo -->
             <a href="index.html" class="logo">
-                <span class="symbol"><img src="{% static 'images/logo.svg' %}" alt=""/></span><span class="title">Mood Analysis</span>
+                <span class="title">Mood Analysis</span>
             </a>
-
         </div>
     </header>
 
@@ -32,8 +32,8 @@
         <div class="inner">
             <span class="image main"><img src="{% static 'images/banner.jpg' %}" alt=""/></span>
             {#            <a href="#" class="button icon solid fa-upload">Icon</a>#}
-            <ul class="actions small">
-                <li>
+            <div class="flexcontainer">
+                <div class="itemleft">
                     <form method="post" action="{% url 'analyse-image' %}" enctype="multipart/form-data">
                         {% csrf_token %}
                         <ul class="actions stacked">
@@ -44,27 +44,28 @@
                             </li>
                         </ul>
                     </form>
-                </li>
-                <li>
+                </div>
 
+                <div class="itemright">
                     <ul class="actions stacked">
                         <li><a href="#" class="button" onclick="record()">Record Video</a></li>
-                        <form method="post" action="{% url 'analyse-recorded-video' %}" enctype="multipart/form-data"
-                              id="stop_recording">
-                            {% csrf_token %}
-                            <input type="hidden" accept="text/strings" id="blob_url" name="blob_url" value="">
-                            <input type="hidden" id="blob_video" name="blob_video" value="">
-                            <li>
+                        <li>
+                            <form method="post" action="{% url 'analyse-recorded-video' %}"
+                                  enctype="multipart/form-data"
+                                  id="stop_recording">
+                                {% csrf_token %}
+                                <input type="hidden" accept="text/strings" id="blob_url" name="blob_url" value="">
+                                <input type="hidden" id="blob_video" name="blob_video" value="">
                                 <button type="submit" class="button primary">Analyze recorded Video
                                 </button>
-                            </li>
-                        </form>
+                            </form>
+                        </li>
                         <li>
                             <video autoplay id="video"></video>
                         </li>
                     </ul>
-                </li>
-            </ul>
+                </div>
+            </div>
         </div>
     </div>
 
