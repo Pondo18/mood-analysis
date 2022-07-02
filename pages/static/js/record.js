@@ -1,6 +1,7 @@
 const parts = [];
 let mediaRecorder;
 let blob;
+let public_stream;
 
 async function record() {
     navigator.mediaDevices.getUserMedia({audio: false, video: true}).then(stream => {
@@ -10,18 +11,19 @@ async function record() {
         mediaRecorder.ondataavailable = function (e) {
             parts.push(e.data)
         }
+        public_stream = stream
     });
-    const delay = ms => new Promise(res => setTimeout(res, ms));
-    await delay(3000);
-    mediaRecorder.stop();
-    blob = new Blob(parts, {
-        type: "video/webm"
-    });
-    document.getElementById("video").srcObject = null;
 }
 
 let form = document.getElementById("stop_recording");
 form.addEventListener("submit", function (event) {
+    mediaRecorder.stop();
+    public_stream.getTracks() // get all tracks from the MediaStream
+        .forEach(track => track.stop()); // stop each of them
+    blob = new Blob(parts, {
+        type: "video/webm"
+    });
+    document.getElementById("video").srcObject = null;
     let form_data = new FormData();
     form_data.append("blob_video", blob, "blob_video");
     let xhr = new XMLHttpRequest();
