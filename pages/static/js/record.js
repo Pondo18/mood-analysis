@@ -29,5 +29,10 @@ form.addEventListener("submit", function (event) {
     let xhr = new XMLHttpRequest();
     xhr.open('POST', form.action, true);
     xhr.send(form_data);
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4) {
+            document.write(xhr.response);
+        }
+    }
     event.preventDefault();
 });

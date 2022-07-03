@@ -102,7 +102,7 @@ class EmotionDetection:
                 gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
             except Exception as e:
                 print(e)
-                print("Picture could not ber read", image_path)
+                print("Picture could not be read", image_path)
                 continue
             faces = self.face_classifier.detectMultiScale(gray, 1.3, 5)
             if str(type(faces)) == "<class 'tuple'>":
