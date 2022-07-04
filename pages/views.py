@@ -13,11 +13,8 @@ def analyse_image(request):
     if request.method == 'POST':
         image = request.FILES['image']
         analyse_image_use = AnalyseImage(image)
-        frame = analyse_image_use.execute()
-        if len(frame) == 0:
-            return render(request, 'pages/index.html')
-        else:
-            return render(request, 'pages/index.html', {'frames': frame, 'emotion': frame[0].emotion})
+        frame, emotion = analyse_image_use.execute()
+        return render(request, 'pages/index.html', {'frames': frame, 'emotion': emotion})
 
 
 @csrf_exempt

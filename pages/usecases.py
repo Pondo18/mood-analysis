@@ -35,7 +35,7 @@ class AnalyseRecordedVideo:
             emotion_detection = EmotionDetection(self.image_names)
             frames, emotions = emotion_detection.execute()
             self._remove_images()
-            return frames, mode(emotions)
+            return frames, 'No face found' if len(frames) == 0 else mode(emotions)
 
     def _get_frame_distance(self):
         cap = cv2.VideoCapture(self.video_path)
@@ -83,7 +83,7 @@ class AnalyseImage:
             f_vid.write(self.image_to_analyse.read())
             emotion_detection = EmotionDetection([f_vid.name])
             frame, _ = emotion_detection.execute()
-            return frame
+            return frame, 'No face found' if len(frame) == 0 else frame[0].emotion
 
 
 class EmotionDetection:

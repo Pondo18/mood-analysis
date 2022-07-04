@@ -69,12 +69,15 @@
                     {% for frame in frames %}
                         <div>
                             <img src="data:;base64,{{ frame.image }}" style="width: 10rem; height: auto;"/>
-                        {{ frame.emotion }}
+                            {{ frame.emotion }}
                         </div>
                     {% endfor %}
                 </div>
                 <hr>
                 <h2>The final emotion is: <u>{{ emotion }}</u></h2>
+            {% elif emotion is not None %}
+                <hr>
+                <h2>No face could be detected</h2>
             {% endif %}
         </div>
     </div>
