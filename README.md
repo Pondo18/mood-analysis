@@ -7,6 +7,20 @@ image includes a face.
 
 * * *
 
+## Implementation 
+
+The application uses a neural network, which is included compiled as a [model](models/emotions_final.h5). 
+It is based on [jupyter notebook](models/emotions_detection.ipynb).
+
+### Structure of the neural network 
+
+![structure](documentation/static/neural_network_structure.png)
+
+### WebApp 
+
+To demonstrate the purpose, there is a WebbApplication build around the model. 
+It allows two different sources: uploading an Image, and interactively recording a Video through the WebApp.
+
 ## Credits & Collaborators
 
 ### Collaborators
