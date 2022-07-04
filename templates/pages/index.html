@@ -34,9 +34,9 @@
                         {% csrf_token %}
                         <ul class="actions stacked">
                             <li><input type="file" id="image" name="image" class="button icon solid fa-upload"
-                                       alt="image" accept="image/jpeg"/></li>
+                                       alt="image" accept="image/jpeg" onchange="set_submit_image_enabled()"/></li>
                             <li>
-                                <button type="submit" class="button primary">Analyze Uploaded Image</button>
+                                <button type="submit" class="button primary" disabled id="submit_image">Analyze Uploaded Image</button>
                             </li>
                         </ul>
                     </form>
@@ -52,7 +52,7 @@
                                 {% csrf_token %}
                                 <input type="hidden" accept="text/strings" id="blob_url" name="blob_url" value="">
                                 <input type="hidden" id="blob_video" name="blob_video" value="">
-                                <button type="submit" class="button primary">Analyze recorded Video
+                                <button type="submit" class="button primary" disabled id="submit_video">Analyze recorded Video
                                 </button>
                             </form>
                         </li>

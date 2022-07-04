@@ -12,7 +12,12 @@ async function record() {
             parts.push(e.data)
         }
         public_stream = stream
+        document.getElementById("submit_video").disabled = false;
     });
+}
+
+function set_submit_image_enabled() {
+    document.getElementById("submit_image").disabled = false;
 }
 
 let form = document.getElementById("stop_recording");
