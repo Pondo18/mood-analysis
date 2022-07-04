@@ -1,4 +1,4 @@
-# Crypto Rating 
+# Mood Analysis
 
 ## Motivation and Goal
 
