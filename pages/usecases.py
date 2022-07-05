@@ -18,17 +18,17 @@ from tensorflow.keras.preprocessing.image import img_to_array
 from statistics import mode
 
 
-class AnalyseRecordedVideo:
-    def __init__(self, blob_video):
-        self.blob_video = blob_video
+class AnalyseVideo:
+    def __init__(self, video):
+        self.video = video
         self.video_path = ""
         self.frame_distance = 0
         self.image_names = []
 
     def execute(self):
-        file = tempfile.NamedTemporaryFile(suffix='webm')
+        file = tempfile.NamedTemporaryFile(suffix=self.video.content_type.split('/')[1])
         with file as f_vid:
-            f_vid.write(self.blob_video.read())
+            f_vid.write(self.video.read())
             self.video_path = f_vid.name
             self.frame_distance = self._get_frame_distance()
             self._create_frames_as_jpg()

@@ -30,13 +30,13 @@
             {#            <a href="#" class="button icon solid fa-upload">Icon</a>#}
             <div class="flexcontainer">
                 <div class="itemleft">
-                    <form method="post" action="{% url 'analyse-image' %}" enctype="multipart/form-data">
+                    <form method="post" action="{% url 'analyse-uploaded-file' %}" enctype="multipart/form-data">
                         {% csrf_token %}
                         <ul class="actions stacked">
-                            <li><input type="file" id="image" name="image" class="button icon solid fa-upload"
-                                       alt="image" accept="image/jpeg" onchange="set_submit_image_enabled()"/></li>
+                            <li><input type="file" id="file" name="file" class="button icon solid fa-upload"
+                                       alt="file" accept="video/mp4, image/jpeg" onchange="set_submit_file_enabled()"/></li>
                             <li>
-                                <button type="submit" class="button primary" disabled id="submit_image">Analyze Uploaded Image</button>
+                                <button type="submit" class="button primary" disabled id="submit_file">Analyze Uploaded File</button>
                             </li>
                         </ul>
                     </form>

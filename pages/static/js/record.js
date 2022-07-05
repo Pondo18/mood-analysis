@@ -16,8 +16,8 @@ async function record() {
     });
 }
 
-function set_submit_image_enabled() {
-    document.getElementById("submit_image").disabled = false;
+function set_submit_file_enabled() {
+    document.getElementById("submit_file").disabled = false;
 }
 
 let form = document.getElementById("stop_recording");
