@@ -5,7 +5,24 @@
 The goal of the project is to provide an application, which is able to analyse images and compute an emotion, if the
 image includes a face.
 
+![analysis_output](documentation/static/analysis_output.png)
+
 * * *
+
+## Deployment 
+
+### Docker
+
+There is a  [Dockerfile](Dockerfile) and a [docker-compose.yml](docker-compose.yml) located in the root dir.
+
+```Bash
+# build docker image
+docker-compose build
+
+# start docker-compose setup in background
+docker-compose up -d  
+```
+
 
 ## Implementation 
 
